@@ -1,6 +1,8 @@
 
-export default function Project() {
-    const tasks = []
+
+
+export default function Project(projectName, projectId) {
+    const tasks = [];
     let idCounter = 1;
     const addTask = (title, description, dueDate) => {
         tasks.push({ id: idCounter, title, description, dueDate });
@@ -13,5 +15,5 @@ export default function Project() {
         const taskWithIdIndex = tasks.findIndex((task) => task.id === id)
         tasks.splice(taskWithIdIndex, 1)
     }
-    return {addTask, findTask, deleteTask, tasks}
+    return {addTask, findTask, deleteTask, tasks, projectName, projectId}
 }
