@@ -9,6 +9,12 @@ body {
     color: #202124;
 }
 
+.icon-size {
+    width: 20px;
+    opacity: 60%;
+    text-align: center;
+}
+
 .content {
     display: grid;
     grid-template-columns: 230px 1fr;
@@ -51,14 +57,27 @@ body {
 
 }
 
+.project-items {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px;
+    align-items: center;
+}
+
 .main {
     background: white;
     border-radius: 12px;
-    padding: 20px;
 }
 
 .main-header {
-    padding-bottom: 20px;
     display: grid;
-
+    height: 40px;
+    background: #eaf1fb;
+    border-radius: 10px 10px 0px 0px;
+    padding: 10px;
 }
+
+.main-content {
+    padding: 10px;
+}
+
