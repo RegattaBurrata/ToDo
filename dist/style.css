@@ -1,0 +1,64 @@
+:root {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0px;
+    padding: 10px 20px;
+    background: #F6F8FC;
+    color: #202124;
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+    align-self: end;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-self: end;
+    /* padding-bottom: 20px; */
+    grid-column: 2 / 3;;
+}
+
+.header > input {
+    height: 40px;
+    width: 600px;
+    border-radius: 6px;
+    border: none;
+    background: #eaf1fb;
+    padding: 5px 5px 5px 12px;
+    font-size: 15px;
+}
+
+.sidebar {
+    
+}
+
+.list-container {
+    padding: 40px 0px 40px 0px;
+}
+
+.list-item {
+
+}
+
+.main {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.main-header {
+    padding-bottom: 20px;
+    display: grid;
+
+}
