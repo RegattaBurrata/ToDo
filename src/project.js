@@ -1,12 +1,12 @@
 
 
 
-export default function Project(projectName, projectId) {
+export default function Project(name) {
     const tasks = [];
-    let idCounter = 1;
+    let id = 1;
     const addTask = (title, description, dueDate) => {
-        tasks.push({ id: idCounter, title, description, dueDate });
-        idCounter++;
+        tasks.push({ id, title, description, dueDate });
+        id++;
     }
     const findTask = (id) => {
         return tasks.find(tasks => tasks.id === id)
@@ -15,5 +15,5 @@ export default function Project(projectName, projectId) {
         const taskWithIdIndex = tasks.findIndex((task) => task.id === id)
         tasks.splice(taskWithIdIndex, 1)
     }
-    return {addTask, findTask, deleteTask, tasks, projectName, projectId}
+    return {addTask, findTask, deleteTask, tasks, name}
 }

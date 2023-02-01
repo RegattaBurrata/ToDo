@@ -9,12 +9,6 @@ body {
     color: #202124;
 }
 
-.icon-size {
-    width: 20px;
-    opacity: 60%;
-    text-align: center;
-}
-
 .content {
     display: grid;
     grid-template-columns: 230px 1fr;
@@ -90,7 +84,7 @@ body {
 
 }
 
-.project-items {
+.project-items, .project-nav-items {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 5px;
@@ -147,4 +141,23 @@ body {
     background: #eaf1fb;
     padding: 5px 5px 5px 12px;
     font-size: 15px;
+}
+
+.project-name {
+    cursor: pointer;
+    margin: 5px;
+}
+
+.project-nav-items {
+    margin-bottom: 20px;
+}
+
+.project-nav-items > .icon-size {
+    width: 20px;
+    opacity: 60%;
+    text-align: center;
+}
+
+.active {
+    font-weight: 800;
 }
