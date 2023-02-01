@@ -4,6 +4,7 @@ import displayNewProject from "./display-projects";
 const projectList = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
 const newProjectInput = document.querySelector('[data-new-project-input');
+
 const projectContent = document.querySelector('.main-content');
 const projectHeader = document.querySelector('.main-header');
 
@@ -18,6 +19,13 @@ let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_K
 projectList.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'p') {
         selectedProjectId = e.target.dataset.projectId;
+        saveAndRender();
+    }
+})
+
+projectList.addEventListener('click', e => {
+    if (e.target.tagName.toLowerCase() === 'img') {
+        projects = projects.filter(project => project.id !== e.target.dataset.deleteProjectButton);
         saveAndRender();
     }
 })
@@ -51,6 +59,12 @@ function render() {
             projectListItem.classList.add('active')
         };
         projectList.appendChild(projectListItem);
+
+        const projectTrashIcon = document.createElement('img');
+        projectTrashIcon.src = './assets/trash.svg'
+        projectTrashIcon.dataset.deleteProjectButton = pro.id;
+        projectList.appendChild(projectTrashIcon);
+        
     })
 }
  //clear out and refresh all projects from sidebar everytime one is added
@@ -61,7 +75,6 @@ function clearElement(element) {
 }
 
 render();
-// localStorage.clear();
 
 function createProject(e) {
     e.preventDefault();
@@ -74,6 +87,7 @@ function createProject(e) {
     //reset input box
     newProjectInput.value = null;
 
+    console.log(projects)
     //render
     saveAndRender();
 }
@@ -120,3 +134,5 @@ function makeAProject(name) {
 // newProject.deleteTask(2);
 
 // console.log(newProject.tasks)
+
+window.localStorage.clear();
