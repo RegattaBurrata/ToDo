@@ -1,15 +1,27 @@
 import Project from "./project";
 import displayNewProject from "./display-projects";
 
+const addProjectButtons = document.querySelectorAll('.add-project')
 const projectList = document.querySelector('[data-projects]');
 const newProjectForm = document.querySelector('[data-new-project-form]');
 const newProjectInput = document.querySelector('[data-new-project-input');
 
-const projectContent = document.querySelector('.main-content');
-const projectHeader = document.querySelector('.main-header');
+const projectHeader = document.querySelector('[data-project-title]');
+const tasksContainer = document.querySelector('[data-tasks]');
+const taskTemplate = document.getElementById('task-template')
+
+const newTaskForm = document.querySelector('[data-new-task-form')
+const newTaskInput = document.querySelector('[data-new-task-input')
+
+addProjectButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        newProjectForm.style.display = 'grid';
+    })
+});
 
 newProjectForm.addEventListener('submit', createProject);
 
+newTaskForm.addEventListener('submit', createTask)
 
 const LOCAL_STORAGE_PROJECT_KEY = 'task.projects';
 const LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY = 'task.selectedProjectId'
@@ -30,6 +42,15 @@ projectList.addEventListener('click', e => {
     }
 })
 
+tasksContainer.addEventListener('click', e => {
+    if (e.target.tagName.toLowerCase() === 'input') {
+        const selectedProject = projects.find(project => project.id === selectedProjectId)
+        const selectedTask = selectedProject.tasks.find(task => task.id = e.target.id)
+        selectedTask.complete = e.target.checked;
+        save()
+    }
+})
+
 function save() {
     localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects));
     localStorage.setItem(LOCAL_STORAGE_SELECTED_PROJECT_ID_KEY, selectedProjectId);
@@ -42,6 +63,33 @@ function saveAndRender() {
 
 function render() {
     clearElement(projectList);
+    renderProjects();
+
+    const selectedProject = projects.find(project => project.id === selectedProjectId);
+    if (selectedProjectId == null) {
+        return
+    } else {
+        projectHeader.innerText = selectedProject.name;
+    }
+    
+    clearElement(tasksContainer);
+    renderTasks(selectedProject);
+}
+
+function renderTasks(selectedProject) {
+    selectedProject.tasks.forEach(task => {
+        const taskElement = document.importNode(taskTemplate.content, true);
+        const checkbox = taskElement.querySelector('input');
+        checkbox.id = task.id;
+        checkbox.checked = task.complete;
+        const label = taskElement.querySelector('label');
+        label.htmlFor = task.id
+        label.append(task.name)
+        tasksContainer.appendChild(taskElement)
+    })
+}
+
+function renderProjects() {
     projects.forEach(pro => {
         const projectListHash = document.createElement('div');
         projectListHash.classList.add('icon-size');
@@ -64,9 +112,12 @@ function render() {
         projectTrashIcon.src = './assets/trash.svg'
         projectTrashIcon.dataset.deleteProjectButton = pro.id;
         projectList.appendChild(projectTrashIcon);
+
+        newProjectForm.style.display = 'none';
         
     })
 }
+
  //clear out and refresh all projects from sidebar everytime one is added
 function clearElement(element) {
     while (element.firstChild) {
@@ -86,53 +137,32 @@ function createProject(e) {
 
     //reset input box
     newProjectInput.value = null;
-
-    console.log(projects)
     //render
     saveAndRender();
 }
 
-function makeAProject(name) {
-    return {id: Date.now().toString(), name: name, tasks: []}
+function createTask(e) {
+    e.preventDefault();
+    const taskName = newTaskInput.value;
+    if (taskName === null || taskName === '') return
+    const task = makeATask(taskName)
+    newTaskInput.value = null;
+    const selectedProject = projects.find(project => project.id === selectedProjectId);
+    selectedProject.tasks.push(task)
+    saveAndRender();
 }
 
-// function selectProject(e) {
-//     const idOfSelectedProject = e.currentTarget.dataset.project;
-//     const selectedProject = projects.find(project => project.projectId == idOfSelectedProject);
-    
-//     selectedProject.addTask('send email', 'send an email to this person', '08.09.23');
-//     selectedProject.tasks.forEach(task => {
-//         const taskContent = document.createElement('div');
-//         taskContent.textContent = `${task.title} ${task.description} ${task.dueDate}`;
-//         projectContent.appendChild(taskContent)
-//     });
-    // selectedProject.tasks.forEach(task => console.log(`${task.title} ${task.description} ${task.dueDate}`));
+function makeAProject(name) {
+    return {
+        id: Date.now().toString(), name: name, tasks: []
+    }
+}
 
-    // const selectedTasks = selectedProject.tasks;
-    // console.log(selectedTasks.description)
-        
-    //     projectHeader.innerHTML = `<div class="project-title-content">${currentProject.project.projectName}</div>`;
-    //     console.log(currentProject.project.tasks);
-    //     projectContent.innerHTML = `<div> ${currentProject.project.title} </div><div> ${currentProject.project.description} </div><div> ${currentProject.project.dueDate} </div>`;
-    // }
+function makeATask(name) {
+    return {
+        id: Date.now().toString(), name: name, complete: false
+    }
+}
 
-// function logTest() {
-//     projects[0].addTask('send email', 'send an email to this person', '08.09.23');
-//     logTest2();
-// }
-
-// function logTest2() {
-//     console.log(projects[0].tasks)
-// }
-
-// newProject.addTask('send email', 'send an email to this person', '08.09.23');
-// newProject.addTask('grocery store', 'go to the store', '08.10.23');
-// newProject.addTask('Do other stuff', 'make this app', '08.10.23');
-
-// console.log(newProject.tasks);
-
-// newProject.deleteTask(2);
-
-// console.log(newProject.tasks)
 
 window.localStorage.clear();

@@ -34,7 +34,7 @@
             <div class="list-container">
                 <h3>Projects</h3>
                 <div class="project-nav-items" >
-                    <img src="./assets//add-icon.svg" class="icon-size" alt="">
+                    <img src="./assets//add-icon.svg" class="icon-size add-project" alt="">
                     <p class="add-project">Add Project</p>
                     <form class="new-project-form" data-new-project-form>
                         <input type="text" id="projectName" name="project-name" placeholder="Project Name" data-new-project-input>
@@ -44,25 +44,25 @@
             </div>
         </div>
         <div class="main">
-            <div class="main-header"></div>
-            <div class="main-content">
-                <!-- <form action="" class="new-task-form">
+            <div class="main-header" data-project-title></div>
+            <div class="main-content" data-tasks>
+                
+            </div>
+            <div class="main-footer">
+                <form action="" class="new-task-form" data-new-task-form>
                     <div>
-                        <label for="title">TITLE</label>
-                        <input name="title" type="text" id="title" placeholder="title">
+                        <input name="title" type="text" id="title" placeholder="Go to the gym..." data-new-task-input>
                     </div>
-                    <div>
-                        <label for="description">DESCRIPTION</label>
-                        <textarea name="description" id="description" cols="30" rows="10" style="resize: none;"></textarea>
-                    </div>
-                    <div>
-                        <label for="date">DUE DATE</label>
-                        <input name="date" type="date" id="date">
-                    </div>
-                </form> -->
+                </form>
             </div>
         </div>
     </div>
     
+    <template id="task-template">
+        <div class="task">
+            <input type="checkbox">
+            <label></label>
+        </div>
+    </template>
 </body>
 </html>
